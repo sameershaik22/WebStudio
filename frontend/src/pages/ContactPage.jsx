@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, CheckCircle2, MessageSquare, Send, Sparkles, HelpCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, CheckCircle2, MessageSquare, Send, Sparkles, HelpCircle, MessageCircle } from 'lucide-react';
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
