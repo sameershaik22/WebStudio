@@ -331,30 +331,6 @@ export const teamMembers = [
     github: '#',
     email: 'sameer@webstudio.com',
   },
-  {
-    name: 'Taufique Ahmad',
-    role: 'Backend Developer',
-    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80',
-    linkedin: 'https://www.linkedin.com/in/taufique-ahmad-b31665413?utm_source=share_via&utm_content=profile&utm_medium=member_android',
-    github: '#',
-    email: 'taufique@webstudio.com',
-  },
-  {
-    name: 'Sifat Hossen Shuvo',
-    role: 'Frontend Developer & Marketing Manager',
-    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=500&q=80',
-    linkedin: 'https://www.linkedin.com/in/mr-shuvo-a1a53241b/',
-    github: '#',
-    email: 'sifathossensuvo@gmail.com',
-  },
-  {
-    name: 'Sophia Vance',
-    role: 'Head of Digital Marketing & Growth',
-    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80',
-    linkedin: '#',
-    github: '#',
-    email: 'sophia@webstudio.com',
-  },
 ];
 
 // Why Choose Us checkmarks

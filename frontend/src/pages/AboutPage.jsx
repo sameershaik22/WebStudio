@@ -41,30 +41,6 @@ export default function AboutPage() {
       icon: Code2,
       bio: 'Leading full-stack system architecture, React/Next.js high-performance engineering, and client technical strategy. Dedicated to building custom codebases with zero bloatware.',
       socials: { linkedin: '#', twitter: '#', github: '#' }
-    },
-    {
-      name: 'Taufique Ahmad',
-      role: 'Backend Developer',
-      tag: 'BACKEND DEV',
-      icon: Cpu,
-      bio: 'Architecting robust, high-security server infrastructures, scalable database systems, and lightning-fast APIs to power enterprise web applications.',
-      socials: { linkedin: 'https://www.linkedin.com/in/taufique-ahmad-b31665413?utm_source=share_via&utm_content=profile&utm_medium=member_android', github: '#' }
-    },
-    {
-      name: 'Sifat Hossen Shuvo',
-      role: 'Frontend Developer & Marketing Manager',
-      tag: 'FRONTEND & GROWTH',
-      icon: TrendingUp,
-      bio: 'Bridging pixel-perfect interactive React UI development with data-driven digital marketing and growth strategies to maximize customer conversion and ROI.',
-      socials: { linkedin: 'https://www.linkedin.com/in/mr-shuvo-a1a53241b/', email: 'sifathossensuvo@gmail.com', github: '#' }
-    },
-    {
-      name: 'Sophia Vance',
-      role: 'Head of Digital Marketing & Growth',
-      tag: 'MARKETING LEAD',
-      icon: Sparkles,
-      bio: 'Driving e-commerce conversion rate optimization, data-backed customer acquisition, and technical SEO dominance to skyrocket client online revenue.',
-      socials: { linkedin: '#', twitter: '#' }
     }
   ];
 
@@ -283,7 +259,13 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+          <div style={{
+            display: teamMembers.length === 1 ? 'flex' : 'grid',
+            justifyContent: teamMembers.length === 1 ? 'center' : 'stretch',
+            gridTemplateColumns: teamMembers.length === 1 ? 'none' : 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '32px',
+            width: '100%'
+          }}>
             {teamMembers.map((member, idx) => {
               const RoleIcon = member.icon;
               const isFounder = idx === 0;
@@ -302,7 +284,9 @@ export default function AboutPage() {
                     boxShadow: isFounder ? '0 20px 50px rgba(200, 155, 102, 0.15)' : '0 10px 30px rgba(0,0,0,0.5)',
                     transition: 'all 0.3s ease',
                     position: 'relative',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    width: '100%',
+                    maxWidth: teamMembers.length === 1 ? '500px' : 'none'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-8px)';
