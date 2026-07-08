@@ -5,10 +5,53 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [projectType, setProjectType] = useState('Custom Website');
   const [budget, setBudget] = useState('$1,500 - $3,000');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [business, setBusiness] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError('');
+
+    const formattedMessage = `Project Type: ${projectType}
+Estimated Budget: ${budget}
+
+Details:
+${message}`;
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          business,
+          message: formattedMessage,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit your inquiry. Please try again.');
+      }
+
+      setSubmitted(true);
+      // Reset form fields
+      setName('');
+      setEmail('');
+      setBusiness('');
+      setMessage('');
+    } catch (err) {
+      setError(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const projectTypes = ['Custom Website', 'E-Commerce Store', 'Web Application', 'UI/UX Design'];
@@ -133,20 +176,26 @@ export default function ContactPage() {
                   Start Your Project Inquiry
                 </h3>
 
+                {error && (
+                  <div style={{ color: '#ff4a4a', fontSize: '14px', background: 'rgba(255, 74, 74, 0.1)', border: '1px solid rgba(255, 74, 74, 0.2)', padding: '12px 16px', borderRadius: '8px', fontWeight: 600 }}>
+                    ⚠️ {error}
+                  </div>
+                )}
+
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <label style={{ fontSize: '13px', fontWeight: 600, color: '#CCCCCC' }}>Your Name *</label>
-                    <input required type="text" placeholder="John Doe" style={{ background: '#0D0D0D', border: '1px solid #282828', borderRadius: '12px', padding: '14px 16px', color: '#FFFFFF', fontSize: '15px', outline: 'none' }} />
+                    <input required type="text" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} style={{ background: '#0D0D0D', border: '1px solid #282828', borderRadius: '12px', padding: '14px 16px', color: '#FFFFFF', fontSize: '15px', outline: 'none' }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <label style={{ fontSize: '13px', fontWeight: 600, color: '#CCCCCC' }}>Email Address *</label>
-                    <input required type="email" placeholder="john@company.com" style={{ background: '#0D0D0D', border: '1px solid #282828', borderRadius: '12px', padding: '14px 16px', color: '#FFFFFF', fontSize: '15px', outline: 'none' }} />
+                    <input required type="email" placeholder="john@company.com" value={email} onChange={(e) => setEmail(e.target.value)} style={{ background: '#0D0D0D', border: '1px solid #282828', borderRadius: '12px', padding: '14px 16px', color: '#FFFFFF', fontSize: '15px', outline: 'none' }} />
                   </div>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label style={{ fontSize: '13px', fontWeight: 600, color: '#CCCCCC' }}>Company / Brand Name</label>
-                  <input type="text" placeholder="Acme Corporation" style={{ background: '#0D0D0D', border: '1px solid #282828', borderRadius: '12px', padding: '14px 16px', color: '#FFFFFF', fontSize: '15px', outline: 'none' }} />
+                  <input type="text" placeholder="Acme Corporation" value={business} onChange={(e) => setBusiness(e.target.value)} style={{ background: '#0D0D0D', border: '1px solid #282828', borderRadius: '12px', padding: '14px 16px', color: '#FFFFFF', fontSize: '15px', outline: 'none' }} />
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -178,12 +227,12 @@ export default function ContactPage() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label style={{ fontSize: '13px', fontWeight: 600, color: '#CCCCCC' }}>Project Goals & Details *</label>
-                  <textarea required rows={4} placeholder="Tell us about your project requirements, timeline, and goals..." style={{ background: '#0D0D0D', border: '1px solid #282828', borderRadius: '12px', padding: '14px 16px', color: '#FFFFFF', fontSize: '15px', outline: 'none', resize: 'vertical' }} />
+                  <textarea required rows={4} placeholder="Tell us about your project requirements, timeline, and goals..." value={message} onChange={(e) => setMessage(e.target.value)} style={{ background: '#0D0D0D', border: '1px solid #282828', borderRadius: '12px', padding: '14px 16px', color: '#FFFFFF', fontSize: '15px', outline: 'none', resize: 'vertical' }} />
                 </div>
 
-                <button type="submit" style={{ background: 'var(--color-btn-cream)', color: '#111111', padding: '18px 36px', borderRadius: 'var(--radius-full)', fontWeight: 700, fontSize: '16px', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', transition: 'all 0.2s ease', boxShadow: '0 10px 30px rgba(200, 155, 102, 0.3)', fontFamily: 'var(--font-heading)', marginTop: '8px' }}>
-                  <span>Submit Project Inquiry</span>
-                  <Send size={18} />
+                <button type="submit" disabled={loading} style={{ background: 'var(--color-btn-cream)', color: '#111111', padding: '18px 36px', borderRadius: 'var(--radius-full)', fontWeight: 700, fontSize: '16px', border: 'none', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', transition: 'all 0.2s ease', boxShadow: '0 10px 30px rgba(200, 155, 102, 0.3)', fontFamily: 'var(--font-heading)', marginTop: '8px', opacity: loading ? 0.7 : 1 }}>
+                  <span>{loading ? 'Submitting Inquiry...' : 'Submit Project Inquiry'}</span>
+                  {!loading && <Send size={18} />}
                 </button>
               </form>
             )}
