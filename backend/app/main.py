@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from backend.app.core.config import settings
-from backend.app.core.database import engine, Base
-from backend.app.api.contact import router as contact_router
+from app.core.config import settings
+from app.core.database import engine, Base
+from app.api.contact import router as contact_router
 
 # Automatically create tables in database on startup
 @asynccontextmanager

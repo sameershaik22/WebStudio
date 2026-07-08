@@ -3,9 +3,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from typing import List
 
-from backend.app.core.database import get_db
-from backend.app.models.models import ContactSubmission, NewsletterSignup
-from backend.app.schemas.schemas import ContactCreate, ContactResponse, NewsletterCreate, NewsletterResponse
+from app.core.database import get_db
+from app.models.models import ContactSubmission, NewsletterSignup
+from app.schemas.schemas import ContactCreate, ContactResponse, NewsletterCreate, NewsletterResponse
 
 router = APIRouter()
 

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime
 from datetime import datetime, timezone
-from backend.app.core.database import Base
+from app.core.database import Base
 
 class ContactSubmission(Base):
     __tablename__ = "contact_submissions"
