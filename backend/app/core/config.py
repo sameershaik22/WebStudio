@@ -19,6 +19,10 @@ class Settings(BaseSettings):
     def get_database_url(self) -> str:
         if self.DATABASE_URL:
             url = self.DATABASE_URL
+            # Strip query parameters (like sslmode, channel_binding) for asyncpg
+            if "?" in url:
+                url = url.split("?")[0]
+            
             if url.startswith("postgres://"):
                 return url.replace("postgres://", "postgresql+asyncpg://", 1)
             elif url.startswith("postgresql://"):
